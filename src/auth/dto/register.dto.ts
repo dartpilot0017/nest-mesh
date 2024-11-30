@@ -1,19 +1,36 @@
 /* eslint-disable prettier/prettier */
-// src/auth/dto/register.dto.ts
-import { IsEmail, IsString, MinLength, IsNotEmpty } from 'class-validator';
+// src/bills/dto/create-bill.dto.ts
+import { ApiProperty } from '@nestjs/swagger';
+import { IsNumber, IsString, IsDateString, IsOptional } from 'class-validator';
 
-export class RegisterDto {
-  @IsEmail()
-  email: string;
+export class CreateBillDto {
+  @ApiProperty({
+    description: 'The order ID associated with the bill.',
+    example: 123,
+  })
+  @IsNumber()
+  orderId: number;
 
+  @ApiProperty({
+    description: 'The amount of the bill.',
+    example: 150.50,
+  })
+  @IsNumber()
+  amount: number;
+
+  @ApiProperty({
+    description: 'The due date for the bill.',
+    example: '2024-12-31',
+  })
+  @IsDateString()
+  dueDate: string;
+
+  @ApiProperty({
+    description: 'An optional description of the bill.',
+    example: 'For services rendered in December',
+    required: false,
+  })
   @IsString()
-  @MinLength(6)
-  password: string;
-
-  @IsString()
-  @IsNotEmpty()
-  name: string; // Add name parameter
-
-  @IsString()
-  role: 'client' | 'contractor';
+  @IsOptional()
+  description?: string;
 }

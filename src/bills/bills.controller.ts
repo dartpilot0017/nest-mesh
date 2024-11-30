@@ -1,4 +1,5 @@
 /* eslint-disable prettier/prettier */
+// src/bills/bills.controller.ts
 import {
   Controller,
   Get,
@@ -7,19 +8,21 @@ import {
   Delete,
   Body,
   Param,
+  UseGuards,
 } from '@nestjs/common';
 import { BillsService } from './bills.service';
 import { CreateBillDto } from './dto/create-bill.dto';
 import { UpdateBillDto } from './dto/update-bill.dto';
-import { ApiTags, ApiOperation, ApiResponse } from '@nestjs/swagger';
+import { JwtAuthGuard } from '../auth/guards/jwt.guard';  // Import the guard
+import { ApiTags, ApiOperation, ApiResponse } from '@nestjs/swagger';  // Import Swagger decorators
 
-@ApiTags('bills')
+@ApiTags('Bills')
 @Controller('bills')
 export class BillsController {
   constructor(private readonly billsService: BillsService) {}
 
-  // Create a new bill
   @Post()
+  @UseGuards(JwtAuthGuard)  // Protect the route
   @ApiOperation({ summary: 'Create a new bill' })
   @ApiResponse({
     status: 201,
@@ -33,34 +36,30 @@ export class BillsController {
     return this.billsService.create(createBillDto);
   }
 
-  // Get all bills
   @Get()
+  @UseGuards(JwtAuthGuard)  // Protect the route
   @ApiOperation({ summary: 'Get all bills' })
   @ApiResponse({
     status: 200,
-    description: 'The list of bills has been successfully retrieved.',
+    description: 'List of all bills.',
   })
   async findAll() {
     return this.billsService.findAll();
   }
 
-  // Get a bill by ID
   @Get(':id')
+  @UseGuards(JwtAuthGuard)  // Protect the route
   @ApiOperation({ summary: 'Get a bill by ID' })
   @ApiResponse({
     status: 200,
-    description: 'The bill has been successfully retrieved.',
-  })
-  @ApiResponse({
-    status: 404,
-    description: 'Bill not found.',
+    description: 'The bill has been successfully fetched.',
   })
   async findOne(@Param('id') id: number) {
     return this.billsService.findOne(id);
   }
 
-  // Update a bill by ID
   @Patch(':id')
+  @UseGuards(JwtAuthGuard)  // Protect the route
   @ApiOperation({ summary: 'Update a bill by ID' })
   @ApiResponse({
     status: 200,
@@ -70,16 +69,12 @@ export class BillsController {
     return this.billsService.update(id, updateBillDto);
   }
 
-  // Delete a bill by ID
   @Delete(':id')
+  @UseGuards(JwtAuthGuard)  // Protect the route
   @ApiOperation({ summary: 'Delete a bill by ID' })
   @ApiResponse({
     status: 200,
     description: 'The bill has been successfully deleted.',
-  })
-  @ApiResponse({
-    status: 404,
-    description: 'Bill not found.',
   })
   async remove(@Param('id') id: number) {
     return this.billsService.remove(id);

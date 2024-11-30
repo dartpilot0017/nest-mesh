@@ -34,7 +34,7 @@ describe('QuotesController (e2e)', () => {
 
   it('should get all quotes for a client', async () => {
     const response = await request(app.getHttpServer())
-      .get('/quotes/1')  // Assuming clientId = 1
+      .get('/quotes/1') // Assuming clientId = 1
       .expect(200);
 
     expect(Array.isArray(response.body)).toBe(true);

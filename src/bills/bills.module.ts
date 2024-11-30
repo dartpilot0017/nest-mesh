@@ -5,12 +5,12 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { BillsService } from './bills.service';
 import { BillsController } from './bills.controller';
 import { Bill } from './entities/bill.entity';
-import { JwtAuthGuard } from '../auth/guards/jwt.guard';  // Import the guard
+import { JwtAuthGuard } from '../auth/guards/jwt.guard'; // Import the guard
 
 @Module({
   imports: [TypeOrmModule.forFeature([Bill])],
   controllers: [BillsController],
-  providers: [BillsService, JwtAuthGuard],  // Provide the JWT Guard here if needed
+  providers: [BillsService, JwtAuthGuard], // Provide the JWT Guard here if needed
   exports: [BillsService],
 })
 export class BillsModule {}

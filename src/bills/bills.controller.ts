@@ -13,8 +13,8 @@ import {
 import { BillsService } from './bills.service';
 import { CreateBillDto } from './dto/create-bill.dto';
 import { UpdateBillDto } from './dto/update-bill.dto';
-import { JwtAuthGuard } from '../auth/guards/jwt.guard';  // Import the guard
-import { ApiTags, ApiOperation, ApiResponse } from '@nestjs/swagger';  // Import Swagger decorators
+import { JwtAuthGuard } from '../auth/guards/jwt.guard'; // Import the guard
+import { ApiTags, ApiOperation, ApiResponse } from '@nestjs/swagger'; // Import Swagger decorators
 
 @ApiTags('Bills')
 @Controller('bills')
@@ -22,7 +22,7 @@ export class BillsController {
   constructor(private readonly billsService: BillsService) {}
 
   @Post()
-  @UseGuards(JwtAuthGuard)  // Protect the route
+  @UseGuards(JwtAuthGuard) // Protect the route
   @ApiOperation({ summary: 'Create a new bill' })
   @ApiResponse({
     status: 201,
@@ -37,7 +37,7 @@ export class BillsController {
   }
 
   @Get()
-  @UseGuards(JwtAuthGuard)  // Protect the route
+  @UseGuards(JwtAuthGuard) // Protect the route
   @ApiOperation({ summary: 'Get all bills' })
   @ApiResponse({
     status: 200,
@@ -48,7 +48,7 @@ export class BillsController {
   }
 
   @Get(':id')
-  @UseGuards(JwtAuthGuard)  // Protect the route
+  @UseGuards(JwtAuthGuard) // Protect the route
   @ApiOperation({ summary: 'Get a bill by ID' })
   @ApiResponse({
     status: 200,
@@ -59,7 +59,7 @@ export class BillsController {
   }
 
   @Patch(':id')
-  @UseGuards(JwtAuthGuard)  // Protect the route
+  @UseGuards(JwtAuthGuard) // Protect the route
   @ApiOperation({ summary: 'Update a bill by ID' })
   @ApiResponse({
     status: 200,
@@ -70,7 +70,7 @@ export class BillsController {
   }
 
   @Delete(':id')
-  @UseGuards(JwtAuthGuard)  // Protect the route
+  @UseGuards(JwtAuthGuard) // Protect the route
   @ApiOperation({ summary: 'Delete a bill by ID' })
   @ApiResponse({
     status: 200,

@@ -1,9 +1,10 @@
 /* eslint-disable prettier/prettier */
-import { Body, Controller, Post } from '@nestjs/common';
+import { Body, Controller, Post, UseGuards } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { LoginDto } from './dto/login.dto';
 import { RegisterDto } from './dto/register.dto';
 import { ApiTags, ApiOperation, ApiResponse, ApiBearerAuth } from '@nestjs/swagger';
+import { JwtAuthGuard } from './guards/jwt.guard';
 
 @ApiTags('auth')
 @Controller('auth')
@@ -13,6 +14,7 @@ export class AuthController {
 
   // Register a new user
   @Post('register')
+  @UseGuards(JwtAuthGuard)
   @ApiOperation({ summary: 'Register a new user' })
   @ApiResponse({
     status: 201,
@@ -28,6 +30,7 @@ export class AuthController {
 
   // Login an existing user
   @Post('login')
+  @UseGuards(JwtAuthGuard)
   @ApiOperation({ summary: 'Login an existing user' })
   @ApiResponse({
     status: 200,

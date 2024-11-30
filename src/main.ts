@@ -13,7 +13,7 @@ async function bootstrap() {
   app.setGlobalPrefix('mesh/api');
 
   app.enableCors({
-    origin: 'https://nest-mesh.onrender.com/api',
+    origin: 'https://nest-mesh.onrender.com',
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
     allowedHeaders: 'Authorization, Content-Type',
   });

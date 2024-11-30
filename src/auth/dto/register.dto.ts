@@ -1,36 +1,37 @@
 /* eslint-disable prettier/prettier */
-// src/bills/dto/create-bill.dto.ts
+// src/auth/dto/register.dto.ts
 import { ApiProperty } from '@nestjs/swagger';
-import { IsNumber, IsString, IsDateString, IsOptional } from 'class-validator';
+import { IsEmail, IsString, MinLength, IsNotEmpty } from 'class-validator';
 
-export class CreateBillDto {
+export class RegisterDto {
   @ApiProperty({
-    description: 'The order ID associated with the bill.',
-    example: 123,
+    description: 'The email of the user.',
+    example: 'user@example.com',
   })
-  @IsNumber()
-  orderId: number;
+  @IsEmail()
+  email: string;
 
   @ApiProperty({
-    description: 'The amount of the bill.',
-    example: 150.50,
-  })
-  @IsNumber()
-  amount: number;
-
-  @ApiProperty({
-    description: 'The due date for the bill.',
-    example: '2024-12-31',
-  })
-  @IsDateString()
-  dueDate: string;
-
-  @ApiProperty({
-    description: 'An optional description of the bill.',
-    example: 'For services rendered in December',
-    required: false,
+    description: 'The password of the user.',
+    example: 'password123',
   })
   @IsString()
-  @IsOptional()
-  description?: string;
+  @MinLength(6)
+  password: string;
+
+  @ApiProperty({
+    description: 'The name of the user.',
+    example: 'John Doe',
+  })
+  @IsString()
+  @IsNotEmpty()
+  name: string;
+
+  @ApiProperty({
+    description: 'The role of the user.',
+    example: 'client',
+    enum: ['client', 'contractor'],
+  })
+  @IsString()
+  role: 'client' | 'contractor';
 }

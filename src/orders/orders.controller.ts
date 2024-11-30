@@ -1,6 +1,14 @@
 /* eslint-disable prettier/prettier */
 // src/orders/orders.controller.ts
-import { Controller, Get, Post, Patch, Delete, Body, Param } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Patch,
+  Delete,
+  Body,
+  Param,
+} from '@nestjs/common';
 import { OrdersService } from './orders.service';
 import { CreateOrderDto } from './dto/create-order.dto';
 import { UpdateOrderDto } from './dto/update-order.dto';
@@ -29,7 +37,10 @@ export class OrdersController {
 
   // Update an order by ID
   @Patch(':id')
-  async update(@Param('id') id: number, @Body() updateOrderDto: UpdateOrderDto) {
+  async update(
+    @Param('id') id: number,
+    @Body() updateOrderDto: UpdateOrderDto,
+  ) {
     return this.ordersService.update(id, updateOrderDto);
   }
 

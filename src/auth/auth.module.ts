@@ -15,9 +15,9 @@ import { JwtStrategy } from './jwt.strategy';
     TypeOrmModule.forFeature([User]), // Connect User entity to TypeORM
     PassportModule,
     JwtModule.register({
-        secret: process.env.JWT_SECRET || 'fallbackSecretKey',
-        signOptions: { expiresIn: '1h' },
-      }),      
+      secret: process.env.JWT_SECRET || 'fallbackSecretKey',
+      signOptions: { expiresIn: '1h' },
+    }),
   ],
   controllers: [AuthController],
   providers: [AuthService, JwtStrategy],

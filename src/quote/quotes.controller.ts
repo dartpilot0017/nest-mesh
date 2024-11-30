@@ -23,7 +23,7 @@ export class QuotesController {
   constructor(private readonly quotesService: QuotesService) {}
 
   @Post()
-  @UseGuards(JwtAuthGuard)  // Protect the route
+  @UseGuards(JwtAuthGuard) // Protect the route
   @ApiOperation({ summary: 'Create a new quote' })
   @ApiResponse({
     status: 201,
@@ -38,7 +38,7 @@ export class QuotesController {
   }
 
   @Get(':clientId')
-  @UseGuards(JwtAuthGuard)  // Protect the route
+  @UseGuards(JwtAuthGuard) // Protect the route
   @ApiOperation({ summary: 'Get all quotes for a client' })
   @ApiResponse({
     status: 200,
@@ -49,7 +49,7 @@ export class QuotesController {
   }
 
   @Get('details/:id')
-  @UseGuards(JwtAuthGuard)  // Protect the route
+  @UseGuards(JwtAuthGuard) // Protect the route
   @ApiOperation({ summary: 'Get quote details by ID' })
   @ApiResponse({
     status: 200,
@@ -60,18 +60,21 @@ export class QuotesController {
   }
 
   @Put(':id')
-  @UseGuards(JwtAuthGuard)  // Protect the route
+  @UseGuards(JwtAuthGuard) // Protect the route
   @ApiOperation({ summary: 'Update a quote by ID' })
   @ApiResponse({
     status: 200,
     description: 'The quote has been successfully updated.',
   })
-  async update(@Param('id') id: number, @Body() updateQuoteDto: UpdateQuoteDto) {
+  async update(
+    @Param('id') id: number,
+    @Body() updateQuoteDto: UpdateQuoteDto,
+  ) {
     return await this.quotesService.update(id, updateQuoteDto);
   }
 
   @Delete(':id')
-  @UseGuards(JwtAuthGuard)  // Protect the route
+  @UseGuards(JwtAuthGuard) // Protect the route
   @ApiOperation({ summary: 'Delete a quote by ID' })
   @ApiResponse({
     status: 200,

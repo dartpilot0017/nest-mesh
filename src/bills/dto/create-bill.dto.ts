@@ -13,7 +13,7 @@ export class CreateBillDto {
 
   @ApiProperty({
     description: 'The amount of the bill.',
-    example: 150.50,
+    example: 150.5,
   })
   @IsNumber()
   amount: number;

@@ -3,10 +3,11 @@
 import { Controller, Get, Post, Param, Body, UseGuards } from '@nestjs/common';
 import { ReportsService } from './reports.service';
 import { JwtAuthGuard } from '../auth/guards/jwt.guard';  // Import the JWT Auth Guard
-import { ApiTags, ApiOperation, ApiResponse } from '@nestjs/swagger';  // Import Swagger decorators
+import { ApiTags, ApiOperation, ApiResponse, ApiBearerAuth } from '@nestjs/swagger';  // Import Swagger decorators
 
 @ApiTags('Reports')  // Swagger tag to categorize the endpoints
 @Controller('reports')
+@ApiBearerAuth()  // Swagger decorator to specify the bearer token authentication
 export class ReportsController {
   constructor(private readonly reportsService: ReportsService) {}
 

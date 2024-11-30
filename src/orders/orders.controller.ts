@@ -14,10 +14,11 @@ import { OrdersService } from './orders.service';
 import { CreateOrderDto } from './dto/create-order.dto';
 import { UpdateOrderDto } from './dto/update-order.dto';
 import { JwtAuthGuard } from '../auth/guards/jwt.guard';  // Import the guard
-import { ApiTags, ApiOperation, ApiResponse } from '@nestjs/swagger';  // Import Swagger decorators
+import { ApiTags, ApiOperation, ApiResponse, ApiBearerAuth } from '@nestjs/swagger';  // Import Swagger decorators
 
 @ApiTags('Orders')
 @Controller('orders')
+@ApiBearerAuth()  // Add this line to enable Bearer token authentication
 export class OrdersController {
   constructor(private readonly ordersService: OrdersService) {}
 

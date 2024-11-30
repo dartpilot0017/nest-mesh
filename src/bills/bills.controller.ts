@@ -14,10 +14,11 @@ import { BillsService } from './bills.service';
 import { CreateBillDto } from './dto/create-bill.dto';
 import { UpdateBillDto } from './dto/update-bill.dto';
 import { JwtAuthGuard } from '../auth/guards/jwt.guard';  // Import the guard
-import { ApiTags, ApiOperation, ApiResponse } from '@nestjs/swagger';  // Import Swagger decorators
+import { ApiTags, ApiOperation, ApiResponse, ApiBearerAuth } from '@nestjs/swagger';  // Import Swagger decorators
 
 @ApiTags('Bills')
 @Controller('bills')
+@ApiBearerAuth()  // Add this line to enable Bearer token authentication
 export class BillsController {
   constructor(private readonly billsService: BillsService) {}
 

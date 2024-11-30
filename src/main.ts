@@ -10,6 +10,13 @@ async function bootstrap() {
   // Set global prefix to /mesh/api
   app.setGlobalPrefix('mesh/api');
 
+  app.enableCors({
+    origin: 'https://nest-mesh.onrender.com/api',
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
+    allowedHeaders: 'Authorization, Content-Type',
+  });
+  
+
   // Enable global validation pipe
   app.useGlobalPipes(
     new ValidationPipe({

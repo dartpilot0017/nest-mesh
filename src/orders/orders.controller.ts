@@ -13,16 +13,17 @@ import {
 import { OrdersService } from './orders.service';
 import { CreateOrderDto } from './dto/create-order.dto';
 import { UpdateOrderDto } from './dto/update-order.dto';
-import { JwtAuthGuard } from '../auth/guards/jwt.guard'; // Import the guard
-import { ApiTags, ApiOperation, ApiResponse } from '@nestjs/swagger'; // Import Swagger decorators
+import { JwtAuthGuard } from '../auth/guards/jwt.guard';  // Import the guard
+import { ApiTags, ApiOperation, ApiResponse, ApiBearerAuth } from '@nestjs/swagger';  // Import Swagger decorators
 
 @ApiTags('Orders')
 @Controller('orders')
+@ApiBearerAuth()  // Add this line to enable Bearer token authentication
 export class OrdersController {
   constructor(private readonly ordersService: OrdersService) {}
 
   @Post()
-  @UseGuards(JwtAuthGuard) // Protect the route
+  @UseGuards(JwtAuthGuard)  // Protect the route
   @ApiOperation({ summary: 'Create a new order' })
   @ApiResponse({
     status: 201,
@@ -37,7 +38,7 @@ export class OrdersController {
   }
 
   @Get()
-  @UseGuards(JwtAuthGuard) // Protect the route
+  @UseGuards(JwtAuthGuard)  // Protect the route
   @ApiOperation({ summary: 'Get all orders' })
   @ApiResponse({
     status: 200,
@@ -48,7 +49,7 @@ export class OrdersController {
   }
 
   @Get(':id')
-  @UseGuards(JwtAuthGuard) // Protect the route
+  @UseGuards(JwtAuthGuard)  // Protect the route
   @ApiOperation({ summary: 'Get an order by ID' })
   @ApiResponse({
     status: 200,
@@ -59,21 +60,18 @@ export class OrdersController {
   }
 
   @Patch(':id')
-  @UseGuards(JwtAuthGuard) // Protect the route
+  @UseGuards(JwtAuthGuard)  // Protect the route
   @ApiOperation({ summary: 'Update an order by ID' })
   @ApiResponse({
     status: 200,
     description: 'The order has been successfully updated.',
   })
-  async update(
-    @Param('id') id: number,
-    @Body() updateOrderDto: UpdateOrderDto,
-  ) {
+  async update(@Param('id') id: number, @Body() updateOrderDto: UpdateOrderDto) {
     return this.ordersService.update(id, updateOrderDto);
   }
 
   @Delete(':id')
-  @UseGuards(JwtAuthGuard) // Protect the route
+  @UseGuards(JwtAuthGuard)  // Protect the route
   @ApiOperation({ summary: 'Delete an order by ID' })
   @ApiResponse({
     status: 200,

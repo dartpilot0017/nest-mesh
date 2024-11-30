@@ -13,11 +13,12 @@ import {
 import { QuotesService } from './quotes.service';
 import { CreateQuoteDto } from './dto/create-quote.dto';
 import { UpdateQuoteDto } from './dto/update-quote.dto';
-import { JwtAuthGuard } from '../auth/guards/jwt.guard'; // Import the guard
-import { ApiTags, ApiOperation, ApiResponse } from '@nestjs/swagger'; // Import Swagger decorators
+import { JwtAuthGuard } from '../auth/guards/jwt.guard';  // Import the guard
+import { ApiTags, ApiOperation, ApiResponse, ApiBearerAuth } from '@nestjs/swagger';  // Import Swagger decorators
 
 @ApiTags('Quotes')
 @Controller('quotes')
+@ApiBearerAuth()  // Add this line to enable Bearer token authentication
 export class QuotesController {
   constructor(private readonly quotesService: QuotesService) {}
 

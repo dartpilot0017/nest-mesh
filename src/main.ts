@@ -3,9 +3,21 @@ import { ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import { ResponseInterceptor } from './response.interceptor';
+import { CustomExceptionFilter } from './custom-error.interceptor';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
+
+  // Set global prefix to /mesh/api
+  app.setGlobalPrefix('mesh/api');
+
+  app.enableCors({
+    origin: 'https://nest-mesh.onrender.com',
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
+    allowedHeaders: 'Authorization, Content-Type',
+  });
+  
 
   // Enable global validation pipe
   app.useGlobalPipes(
@@ -16,19 +28,23 @@ async function bootstrap() {
     }),
   );
 
+  // Apply the global response interceptor
+  app.useGlobalInterceptors(new ResponseInterceptor());
+  app.useGlobalFilters(new CustomExceptionFilter());
+
   // Swagger configuration
   const config = new DocumentBuilder()
-    .setTitle('Driveway Service API') // Set the title of your API documentation
-    .setDescription('API documentation for the Driveway Service') // Description
-    .setVersion('1.0') // Version of your API
-    .addTag('auth') // Optional: tag for authentication-related APIs
+    .setTitle('Driveway Service API')  // Set the title of your API documentation
+    .setDescription('API documentation for the Driveway Service')  // Description
+    .setVersion('1.0')  // Version of your API
+    .addTag('auth')  // Optional: tag for authentication-related APIs
     .build();
 
   // Create Swagger document
   const document = SwaggerModule.createDocument(app, config);
 
   // Setup Swagger UI
-  SwaggerModule.setup('api', app, document); // Swagger UI will be available at '/api'
+  SwaggerModule.setup('api', app, document);  // Swagger UI will be available at '/api'
 
   await app.listen(process.env.PORT ?? 3000);
 }

@@ -7,6 +7,9 @@ import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
+  // Set global prefix to /mesh/api
+  app.setGlobalPrefix('mesh/api');
+
   // Enable global validation pipe
   app.useGlobalPipes(
     new ValidationPipe({
@@ -21,7 +24,7 @@ async function bootstrap() {
     .setTitle('Driveway Service API')  // Set the title of your API documentation
     .setDescription('API documentation for the Driveway Service')  // Description
     .setVersion('1.0')  // Version of your API
-    .addTag('auth')  // Optional: tag for authentication-related APIs
+    .addBearerAuth() // Adds the Bearer token authorization option
     .build();
 
   // Create Swagger document

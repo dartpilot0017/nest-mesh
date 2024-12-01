@@ -13,7 +13,7 @@ async function bootstrap() {
   app.setGlobalPrefix('mesh/api');
 
   app.enableCors({
-    origin: 'https://nest-mesh.onrender.com',
+    origin: 'https://nest-mesh-o2o1.onrender.com',
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
     allowedHeaders: 'Authorization, Content-Type',
   });
@@ -46,7 +46,7 @@ async function bootstrap() {
   // Setup Swagger UI
   SwaggerModule.setup('api', app, document);  // Swagger UI will be available at '/api'
 
-  await app.listen(process.env.PORT ?? 3000);
+  await app.listen(process.env.PORT ?? 4000);
 }
 
 bootstrap();

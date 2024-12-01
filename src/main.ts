@@ -1,11 +1,11 @@
 /* eslint-disable prettier/prettier */
 import { ValidationPipe } from '@nestjs/common';
-import { NestFactory, Reflector } from '@nestjs/core';
+import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { ResponseInterceptor } from './response.interceptor';
 import { CustomExceptionFilter } from './custom-error.interceptor';
-import { JwtAuthGuard } from './auth/guards/jwt.guard';
+// import { JwtAuthGuard } from './auth/guards/jwt.guard';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -29,9 +29,9 @@ async function bootstrap() {
     }),
   );
 
-  // Apply the JWT Guard globally
-  const reflector = app.get(Reflector);
-  app.useGlobalGuards(new JwtAuthGuard(reflector));
+  // // Apply the JWT Guard globally
+  // const reflector = app.get(Reflector);
+  // app.useGlobalGuards(new JwtAuthGuard(reflector));
 
   // Apply the global response interceptor
   app.useGlobalInterceptors(new ResponseInterceptor());

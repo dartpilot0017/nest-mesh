@@ -13,9 +13,11 @@ async function bootstrap() {
   app.setGlobalPrefix('mesh/api');
 
   app.enableCors({
-    origin: process.env.CURL_URL||'https://nest-mesh-o2o1.onrender.com',
+    origin: process.env.CURL_URL||'https://nest-mesh.onrender.com',
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
-    allowedHeaders: 'Authorization, Content-Type',
+    allowedHeaders: 'Authorization, Content-Type, Accept, X-Requested-With',
+    credentials: true,
+    
   });
   
 

@@ -38,6 +38,20 @@ async function bootstrap() {
       credentials: true,
     }));
 
+    app.enableCors({
+      origin: (origin, callback) => {
+        const allowedOrigins = ['*'];
+        if (!origin || allowedOrigins.includes(origin)) {
+          callback(null, true);
+        } else {
+          callback(new Error('Not allowed by CORS'));
+        }
+      },
+      methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
+      allowedHeaders: 'Content-Type,Authorization',
+      credentials: true,
+    });
+
   // // Apply the JWT Guard globally
   // const reflector = app.get(Reflector);
   // app.useGlobalGuards(new JwtAuthGuard(reflector));

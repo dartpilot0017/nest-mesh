@@ -15,7 +15,7 @@ import { JwtStrategy } from './jwt.strategy';
     TypeOrmModule.forFeature([User]), // Connect User entity to TypeORM
     PassportModule,
     JwtModule.register({
-      secret: process.env.JWT_KEY||'6PAOIeoalwiU+QJaMQa6pSrOqrFcde7waotpz4cCjkI=',
+      secret: process.env.JWT_KEY,
       signOptions: { expiresIn: '1h' },
     }),
   ],

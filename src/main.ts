@@ -5,6 +5,7 @@ import { AppModule } from './app.module';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { ResponseInterceptor } from './response.interceptor';
 import { CustomExceptionFilter } from './custom-error.interceptor';
+import * as cors from 'cors';
 // import { JwtAuthGuard } from './auth/guards/jwt.guard';
 
 async function bootstrap() {
@@ -28,6 +29,14 @@ async function bootstrap() {
       transform: true, // Automatically transform payloads to match DTO classes
     }),
   );
+
+    // Use cors middleware
+    app.use(cors({
+      origin: ['*'],
+      methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS', 'PATCH', 'HEAD'],
+      allowedHeaders: ['Content-Type', 'Authorization'],
+      credentials: true,
+    }));
 
   // // Apply the JWT Guard globally
   // const reflector = app.get(Reflector);
@@ -64,7 +73,7 @@ async function bootstrap() {
     },
   }); // Swagger UI will be available at '/api'
 
-  await app.listen(process.env.PORT ?? 4000);
+  await app.listen(process.env.PORT ?? 5000);
 }
 
 bootstrap();

@@ -5,12 +5,23 @@ import { AppModule } from './app.module';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { ResponseInterceptor } from './response.interceptor';
 import { CustomExceptionFilter } from './custom-error.interceptor';
+//import * as cors from 'cors';
+// import { JwtAuthGuard } from './auth/guards/jwt.guard';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
   // Set global prefix to /mesh/api
   app.setGlobalPrefix('mesh/api');
+
+ /* app.enableCors({
+    origin: process.env.CURL_URL||'http://localhost:3000',
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
+    allowedHeaders: 'Authorization, Content-Type, Accept, X-Requested-With',
+    credentials: true,
+    
+  });*/
+  
 
   // Enable global validation pipe
   app.useGlobalPipes(
@@ -21,6 +32,32 @@ async function bootstrap() {
     }),
   );
 
+    // Use cors middleware
+    /*app.use(cors({
+      origin: ['*'],
+      methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS', 'PATCH', 'HEAD'],
+      allowedHeaders: ['Content-Type', 'Authorization'],
+      credentials: true,
+    }));*/
+
+    app.enableCors({
+      origin: (origin, callback) => {
+        const allowedOrigins = ["http://localhost:3000","http://localhost:3001"];
+        if (!origin || allowedOrigins.includes(origin)) {
+          callback(null, true);
+        } else {
+          callback(new Error('Not allowed by CORS'));
+        }
+      },
+      methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
+      allowedHeaders: 'Content-Type,Authorization,Accept ,X-Requested-With',
+      credentials: true,
+    });
+
+  // // Apply the JWT Guard globally
+  // const reflector = app.get(Reflector);
+  // app.useGlobalGuards(new JwtAuthGuard(reflector));
+
   // Apply the global response interceptor
   app.useGlobalInterceptors(new ResponseInterceptor());
   app.useGlobalFilters(new CustomExceptionFilter());
@@ -29,7 +66,7 @@ async function bootstrap() {
   const config = new DocumentBuilder()
     .setTitle('Driveway Service API') // Set the title of your API documentation
     .setDescription('API documentation for the Driveway Service') // Description
-    .setVersion('1.0') // Version of your API
+    .setVersion('1.1') // Version of your API
     .addBearerAuth(
       {
         type: 'http',
@@ -52,7 +89,7 @@ async function bootstrap() {
     },
   }); // Swagger UI will be available at '/api'
 
-  await app.listen(process.env.PORT ?? 3000);
+  await app.listen(process.env.PORT ?? 5000);
 }
 
 bootstrap();

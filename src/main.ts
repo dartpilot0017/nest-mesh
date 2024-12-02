@@ -5,7 +5,7 @@ import { AppModule } from './app.module';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { ResponseInterceptor } from './response.interceptor';
 import { CustomExceptionFilter } from './custom-error.interceptor';
-import * as cors from 'cors';
+//import * as cors from 'cors';
 // import { JwtAuthGuard } from './auth/guards/jwt.guard';
 
 async function bootstrap() {
@@ -14,11 +14,13 @@ async function bootstrap() {
   // Set global prefix to /mesh/api
   app.setGlobalPrefix('mesh/api');
 
-  app.enableCors({
-    origin: process.env.CURL_URL||'https://nest-mesh.onrender.com',
+ /* app.enableCors({
+    origin: process.env.CURL_URL||'http://localhost:3000',
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
-    allowedHeaders: 'Authorization, Content-Type',
-  });
+    allowedHeaders: 'Authorization, Content-Type, Accept, X-Requested-With',
+    credentials: true,
+    
+  });*/
   
 
   // Enable global validation pipe
@@ -31,16 +33,16 @@ async function bootstrap() {
   );
 
     // Use cors middleware
-    app.use(cors({
+    /*app.use(cors({
       origin: ['*'],
       methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS', 'PATCH', 'HEAD'],
       allowedHeaders: ['Content-Type', 'Authorization'],
       credentials: true,
-    }));
+    }));*/
 
     app.enableCors({
       origin: (origin, callback) => {
-        const allowedOrigins = ['*'];
+        const allowedOrigins = ["http://localhost:3000","http://localhost:3001"];
         if (!origin || allowedOrigins.includes(origin)) {
           callback(null, true);
         } else {
@@ -48,7 +50,7 @@ async function bootstrap() {
         }
       },
       methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
-      allowedHeaders: 'Content-Type,Authorization',
+      allowedHeaders: 'Content-Type,Authorization,Accept ,X-Requested-With',
       credentials: true,
     });
 
